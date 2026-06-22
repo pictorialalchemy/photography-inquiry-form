@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Session Inquiry | Pictorial Alchemy</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Georgia', serif;
+      background: #f9f6f1;
+      color: #2c2c2c;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.08);
+      padding: 48px 44px;
+      max-width: 580px;
+      width: 100%;
+    }
+
+    .brand {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .brand h1 {
+      font-size: 1.8rem;
+      letter-spacing: 0.04em;
+      color: #1a1a1a;
+    }
+
+    .brand p {
+      font-size: 0.95rem;
+      color: #777;
+      margin-top: 6px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: bold;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #555;
+      margin-bottom: 6px;
+      margin-top: 22px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid #ddd;
+      border-radius: 7px;
+      font-size: 1rem;
+      font-family: inherit;
+      background: #fdfcfb;
+      color: #2c2c2c;
+      transition: border-color 0.2s;
+      appearance: none;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #b07d5c;
+    }
+
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23888' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .row {
+      display: flex;
+      gap: 16px;
+    }
+
+    .row > div {
+      flex: 1;
+    }
+
+    button[type="submit"] {
+      margin-top: 30px;
+      width: 100%;
+      padding: 14px;
+      background: #2c2c2c;
+      color: #fff;
+      font-size: 0.9rem;
+      font-family: inherit;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 7px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    button[type="submit"]:hover {
+      background: #b07d5c;
+    }
+
+    .success-msg {
+      display: none;
+      text-align: center;
+      padding: 20px;
+      background: #f0f7ee;
+      border-radius: 8px;
+      color: #3a7d44;
+      margin-top: 20px;
+      font-size: 1rem;
+    }
+
+    .error-msg {
+      display: none;
+      text-align: center;
+      padding: 12px;
+      background: #fdecea;
+      border-radius: 8px;
+      color: #b00020;
+      margin-top: 14px;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 500px) {
+      .card { padding: 32px 22px; }
+      .row { flex-direction: column; gap: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="brand">
+      <h1>Pictorial Alchemy</h1>
+      <p>Session Inquiry &mdash; Let&rsquo;s create something beautiful together.</p>
+    </div>
+
+    <form id="inquiryForm">
+
+      <label for="session">Session Category *</label>
+      <select id="session" name="session" required>
+        <option value="">Select a session type&hellip;</option>
+        <option value="Wedding">Wedding</option>
+        <option value="Engagement">Engagement</option>
+        <option value="Portrait">Portrait</option>
+        <option value="Family">Family</option>
+        <option value="Maternity">Maternity</option>
+        <option value="Newborn">Newborn</option>
+        <option value="Graduation">Graduation</option>
+        <option value="Quincea&ntilde;era">Quincea&ntilde;era</option>
+        <option value="Branding / Business">Branding / Business</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <label for="date">Desired Session Date *</label>
+      <input type="date" id="date" name="desired_date" required />
+
+      <label for="name">Full Name *</label>
+      <input type="text" id="name" name="name" placeholder="Your full name" required />
+
+      <div class="row">
+        <div>
+          <label for="phone">Phone Number *</label>
+          <input type="tel" id="phone" name="phone" placeholder="(956) 000-0000" required />
+        </div>
+        <div>
+          <label for="email">Email Address *</label>
+          <input type="email" id="email" name="email" placeholder="you@email.com" required />
+        </div>
+      </div>
+
+      <label for="message">Tell Me About Your Vision</label>
+      <textarea id="message" name="message" placeholder="Share any details, ideas, locations, or questions you have..."></textarea>
+
+      <button type="submit">Send My Inquiry</button>
+
+      <div class="success-msg" id="successMsg">
+        Thank you! Your inquiry has been received. I&rsquo;ll be in touch within 24&ndash;48 hours.
+      </div>
+      <div class="error-msg" id="errorMsg">
+        Something went wrong. Please try again or email me directly.
+      </div>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('inquiryForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const btn = form.querySelector('button[type="submit"]');
+      const successMsg = document.getElementById('successMsg');
+      const errorMsg = document.getElementById('errorMsg');
+
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+      successMsg.style.display = 'none';
+      errorMsg.style.display = 'none';
+
+      const data = new FormData(form);
+
+      try {
+        const res = await fetch('/api/submit', {
+          method: 'POST',
+          body: data
+        });
+
+        if (res.ok) {
+          successMsg.style.display = 'block';
+          form.reset();
+        } else {
+          errorMsg.style.display = 'block';
+        }
+      } catch (err) {
+        errorMsg.style.display = 'block';
+      }
+
+      btn.textContent = 'Send My Inquiry';
+      btn.disabled = false;
+    });
+  </script>
+</body>
+</html>
