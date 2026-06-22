@@ -45,7 +45,7 @@ export async function onRequestPost(context) {
     // --- Build the email you will receive ---
     const emailToYou = {
       from:    'inquiries@pictorialalchemy.com',
-      to:      'YOUR_EMAIL_HERE@gmail.com',   // <-- REPLACE with your real email
+      to:      'pictorialalchemyimgs@gmail.com',   // <-- REPLACE with your real email
       subject: `New Inquiry: ${session} - ${name}`,
       text: [
         '--- NEW SESSION INQUIRY ---',
