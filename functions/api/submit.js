@@ -1,8 +1,7 @@
 // ==============================================================
 // FILE: functions/api/submit.js
-// Receives inquiry form data from both pages and emails it
-// to the owner via MailChannels (built into Cloudflare Pages).
-// Field names match exactly what the HTML forms send.
+// Sends inquiry form submissions via Resend.
+// Emails owner at Novalex1016@icloud.com and confirms to client.
 // ==============================================================
 
 export async function onRequestPost(context) {
@@ -24,35 +23,37 @@ export async function onRequestPost(context) {
       );
     }
 
-    const sendEmail = async (payload) => {
-      return fetch('https://api.mailchannels.net/tx/v1/send', {
+    const RESEND_API_KEY = context.env.RESEND_API_KEY;
+
+    const sendEmail = async (to, subject, text) => {
+      return fetch('https://api.resend.com/emails', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Authorization': `Bearer ${RESEND_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({
-          personalizations: [{ to: [{ email: payload.to }] }],
-          from: { email: 'inquiries@pictorialalchemy.com', name: 'Pictorial Alchemy' },
-          subject: payload.subject,
-          content: [{ type: 'text/plain', value: payload.text }],
+          from: 'Pictorial Alchemy <inquiries@pictorialalchemy.com>',
+          to: [to],
+          subject: subject,
+          text: text,
         }),
       });
     };
 
-    // Email to you (the owner)
-    const emailToYou = {
-      to: 'Novalex1016@icloud.com',
-      subject: `New Inquiry — ${session} — ${name}`,
-      text: `New inquiry received from pictorialalchemy.com\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nSession Type: ${session}\nDesired Date: ${desireddate}\n\nMessage:\n${message}`,
-    };
+    // Email to owner
+    await sendEmail(
+      'Novalex1016@icloud.com',
+      `New Inquiry - ${session} - ${name}`,
+      `New inquiry from pictorialalchemy.com\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nSession Type: ${session}\nDesired Date: ${desireddate}\n\nMessage:\n${message}`
+    );
 
-    // Confirmation email to the client
-    const emailToClient = {
-      to: email,
-      subject: 'Your inquiry has been received — Pictorial Alchemy',
-      text: `Hi ${name},\n\nThank you for reaching out! I received your inquiry for a ${session} session on ${desireddate} and will be in touch within 48 hours.\n\nLooking forward to connecting,\nPictorial Alchemy\npictorialalchemy.com`,
-    };
-
-    await sendEmail(emailToYou);
-    sendEmail(emailToClient); // fire and forget
+    // Confirmation to client (fire and forget)
+    sendEmail(
+      email,
+      'Your inquiry has been received - Pictorial Alchemy',
+      `Hi ${name},\n\nThank you for reaching out! I received your inquiry for a ${session} session on ${desireddate} and will be in touch within 48 hours.\n\nLooking forward to connecting,\nPictorial Alchemy\npictorialalchemy.com`
+    );
 
     return new Response(JSON.stringify({ ok: true }), {
       status: 200,
