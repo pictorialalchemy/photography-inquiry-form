@@ -2,11 +2,11 @@
 // FILE: functions/api/submit.js
 // Sends inquiry form submissions via Resend.
 // Emails owner at Novalex1016@icloud.com and confirms to client.
-// CORS enabled for pictorialalchemy.com
+// CORS enabled for all origins (proxied via Cloudflare Worker)
 // ==============================================================
 
 const CORS_HEADERS = {
-  'Access-Control-Allow-Origin': 'https://pictorialalchemy.com',
+  'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type',
 };
@@ -17,13 +17,26 @@ export async function onRequestOptions() {
 
 export async function onRequestPost(context) {
   try {
-    const formData = await context.request.formData();
-    const session     = formData.get('session')     || '';
-    const desireddate = formData.get('desireddate') || '';
-    const name        = formData.get('name')        || '';
-    const phone       = formData.get('phone')       || '';
-    const email       = formData.get('email')       || '';
-    const message     = formData.get('message')     || '';
+    const contentType = context.request.headers.get('Content-Type') || '';
+    let session = '', desireddate = '', name = '', phone = '', email = '', message = '';
+
+    if (contentType.includes('application/json')) {
+      const json = await context.request.json();
+      session     = json.session     || '';
+      desireddate = json.desireddate || '';
+      name        = json.name        || '';
+      phone       = json.phone       || '';
+      email       = json.email       || '';
+      message     = json.message     || '';
+    } else {
+      const formData = await context.request.formData();
+      session     = formData.get('session')     || '';
+      desireddate = formData.get('desireddate') || '';
+      name        = formData.get('name')        || '';
+      phone       = formData.get('phone')       || '';
+      email       = formData.get('email')       || '';
+      message     = formData.get('message')     || '';
+    }
 
     // Validate required fields
     if (!name || !email || !phone || !session) {
@@ -34,6 +47,7 @@ export async function onRequestPost(context) {
     }
 
     const RESEND_API_KEY = context.env.RESEND_API_KEY;
+
     const sendEmail = async (to, subject, text) => {
       return fetch('https://api.resend.com/emails', {
         method: 'POST',
