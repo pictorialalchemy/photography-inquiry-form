@@ -2,12 +2,22 @@
 // FILE: functions/api/submit.js
 // Sends inquiry form submissions via Resend.
 // Emails owner at Novalex1016@icloud.com and confirms to client.
+// CORS enabled for pictorialalchemy.com
 // ==============================================================
+
+const CORS_HEADERS = {
+  'Access-Control-Allow-Origin': 'https://pictorialalchemy.com',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type',
+};
+
+export async function onRequestOptions() {
+  return new Response(null, { status: 204, headers: CORS_HEADERS });
+}
 
 export async function onRequestPost(context) {
   try {
     const formData = await context.request.formData();
-
     const session     = formData.get('session')     || '';
     const desireddate = formData.get('desireddate') || '';
     const name        = formData.get('name')        || '';
@@ -19,12 +29,11 @@ export async function onRequestPost(context) {
     if (!name || !email || !phone || !session) {
       return new Response(
         JSON.stringify({ error: 'Missing required fields.' }),
-        { status: 400, headers: { 'Content-Type': 'application/json' } }
+        { status: 400, headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
       );
     }
 
     const RESEND_API_KEY = context.env.RESEND_API_KEY;
-
     const sendEmail = async (to, subject, text) => {
       return fetch('https://api.resend.com/emails', {
         method: 'POST',
@@ -57,13 +66,12 @@ export async function onRequestPost(context) {
 
     return new Response(JSON.stringify({ ok: true }), {
       status: 200,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...CORS_HEADERS },
     });
-
   } catch (err) {
     return new Response(
       JSON.stringify({ error: 'Server error. Please try again.' }),
-      { status: 500, headers: { 'Content-Type': 'application/json' } }
+      { status: 500, headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
     );
   }
 }
