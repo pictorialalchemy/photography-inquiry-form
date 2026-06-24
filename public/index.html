@@ -71,6 +71,291 @@
       .brand h1 { font-size: 1.5rem; }
     }
 
+    /* ── CAROUSEL ── */
+    .carousel-section {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 860px;
+      margin-top: 56px;
+    }
+    .carousel-label {
+      text-align: center;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #b0806a;
+      margin-bottom: 18px;
+    }
+    .carousel-track-wrap {
+      position: relative;
+      overflow: hidden;
+      border-radius: 10px;
+      box-shadow: 0 6px 36px rgba(0,0,0,0.13);
+      background: #1a1a1a;
+    }
+    .carousel-track {
+      display: flex;
+      transition: transform 0.7s cubic-bezier(0.77, 0, 0.18, 1);
+      will-change: transform;
+    }
+    .carousel-track img {
+      min-width: 100%;
+      width: 100%;
+      height: 520px;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.15);
+      border: none;
+      color: #fff;
+      font-size: 1.4rem;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+      z-index: 2;
+      backdrop-filter: blur(4px);
+    }
+    .carousel-btn:hover { background: rgba(255,255,255,0.32); }
+    .carousel-btn.prev { left: 14px; }
+    .carousel-btn.next { right: 14px; }
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .carousel-dots span {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #ccc;
+      display: inline-block;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .carousel-dots span.active {
+      background: #b0806a;
+      transform: scale(1.3);
+    }
+    @media (max-width: 600px) {
+      .carousel-track img { height: 260px; }
+      .carousel-btn { width: 36px; height: 36px; font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="brand">
+      <h1>Pictorial Alchemy</h1>
+      <p>Session Inquiry — Let's create something beautiful together.</p>
+    </div>
+    <form id="inquiryForm">
+      <div class="form-group">
+        abel for="session">Session Category <span class="req">*</span></label>
+        <div class="select-wrap">
+          <select id="session" name="session" required>
+            <option value="" disabled selected>Select a session type...</option>
+            <option value="Portraits">Portraits</option>
+            <option value="Couples">Couples</option>
+            <option value="Engagement">Engagement</option>
+            <option value="Wedding">Wedding</option>
+            <option value="Maternity">Maternity</option>
+            <option value="Newborn">Newborn</option>
+            <option value="Family">Family</option>
+            <option value="Children / Milestone">Children / Milestone</option>
+            <option value="Quinceanera">Quinceñera</option>
+            <option value="Senior / Graduation">Senior / Graduation</option>
+            <option value="Headshots / Brand">Headshots / Brand</option>
+            <option value="Boudoir">Boudoir</option>
+            <option value="Other">Other / Not Listed</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        abel for="desired_date">Desired Session Date <span class="req">*</span></label>
+        <input type="date" id="desired_date" name="desired_date" required />
+      </div>
+      <div class="form-group">
+        abel for="name">Full Name <span class="req">*</span></label>
+        <input type="text" id="name" name="name" placeholder="Your full name" required />
+      </div>
+      <div class="form-group row">
+        <div>
+          abel for="phone">Phone Number <span class="req">*</span></label>
+          <input type="tel" id="phone" name="phone" placeholder="(956) 000-0000" required />
+        </div>
+        <div>
+          abel for="email">Email Address <span class="req">*</span></label>
+          <input type="email" id="email" name="email" placeholder="you@email.com" required />
+        </div>
+      </div>
+      <div class="form-group">
+        abel for="message">Tell Me About Your Vision</label>
+        <textarea id="message" name="message" placeholder="Share any details, ideas, locations, or questions you have..."></textarea>
+      </div>
+      <button class="btn" id="submitBtn" type="submit">Send My Inquiry</button>
+      <div class="msg success" id="successMsg">Thank you! Your inquiry has been received. I'll be in touch within 48 hours.</div>
+      <div class="msg error" id="errorMsg">Something went wrong. Please try again or email me directly.</div>
+    </form>
+  </div>
+
+  <!-- CAROUSEL -->
+  <section class="carousel-section" aria-label="Portfolio preview">
+    <p class="carousel-label">A glimpse of the work</p>
+    <div class="carousel-track-wrap" id="carouselWrap">
+      <div class="carousel-track" id="carouselTrack">
+        <img src="/assets/images/home-hero/hero-01.jpg" alt="Pictorial Alchemy portfolio image 1" />
+        <img src="/assets/images/home-hero/hero-02.jpg" alt="Pictorial Alchemy portfolio image 2" />
+        <img src="/assets/images/home-hero/hero-03.jpg" alt="Pictorial Alchemy portfolio image 3" />
+        <img src="/assets/images/home-hero/hero-04.jpg" alt="Pictorial Alchemy portfolio image 4" />
+        <img src="/assets/images/home-hero/hero-05.jpg" alt="Pictorial Alchemy portfolio image 5" />
+        <img src="/assets/images/home-hero/hero-06.jpg" alt="Pictorial Alchemy portfolio image 6" />
+        <img src="/assets/images/home-hero/hero-07.jpg" alt="Pictorial Alchemy portfolio image 7" />
+        <img src="/assets/images/home-hero/hero-08.jpg" alt="Pictorial Alchemy portfolio image 8" />
+        <img src="/assets/images/home-hero/hero-09.jpg" alt="Pictorial Alchemy portfolio image 9" />
+        <img src="/assets/images/home-hero/hero-10.jpg" alt="Pictorial Alchemy portfolio image 10" />
+        <img src="/assets/images/home-hero/hero-11.jpg" alt="Pictorial Alchemy portfolio image 11" />
+      </div>
+      <button class="carousel-btn prev" id="prevBtn" aria-label="Previous image">&#8592;</button>
+      <button class="carousel-btn next" id="nextBtn" aria-label="Next image">&#8594;</button>
+    </div>
+    <div class="carousel-dots" id="carouselDots"></div>
+  </section>
+
+  <footer>© 2026 Pictorial Alchemy — All rights reserved.</footer>
+
+  <script>
+    // Phone formatter
+    const phoneInput = document.getElementById('phone');
+    phoneInput.addEventListener('input', function () {
+      let val = this.value.replace(/\D/g, '').substring(0, 10);
+      if (val.length >= 6) { val = '(' + val.substring(0,3) + ') ' + val.substring(3,6) + '-' + val.substring(6); }
+      else if (val.length >= 3) { val = '(' + val.substring(0,3) + ') ' + val.substring(3); }
+      this.value = val;
+    });
+
+    // Form submit
+    document.getElementById('inquiryForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const btn = document.getElementById('submitBtn');
+      const successMsg = document.getElementById('successMsg');
+      const errorMsg = document.getElementById('errorMsg');
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+      successMsg.style.display = 'none';
+      errorMsg.style.display = 'none';
+      const formData = new FormData(this);
+      try {
+        const res = await fetch('/api/submit', { method: 'POST', body: formData });
+        if (res.ok) { successMsg.style.display = 'block'; this.reset(); }
+        else { const data = await res.json(); errorMsg.textContent = data.error || 'Something went wrong.'; errorMsg.style.display = 'block'; }
+      } catch (err) { errorMsg.style.display = 'block'; }
+      btn.disabled = false;
+      btn.textContent = 'Send My Inquiry';
+    });
+
+    // Carousel
+i added it confirmed the changes, but I don't see the images on the website.
+Completed 16 steps
+The HTML in GitHub looks structurally correct — the carousel section, label tags, and form are all there. The issue is the abel> tags are missing their opening < bracket in the file, which is why the site renders abel for=... instead of proper labels.
+
+Also critically — the carousel script is incomplete. When I gave you the code earlier, the message got cut off right at // Carousel — so the JavaScript that actually drives the carousel was never included.
+
+Two things to fix right now:
+The abel> tags are missing their opening < — this is a paste/save issue
+
+The carousel JavaScript was cut off and never made it into the file
+
+I'm going to give you the complete, correct, final index.html right now. Open your GitHub repo, click the pencil (edit) icon on public/index.html, select all, delete everything, and paste this entire file:
+
+xml
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Session Inquiry | Pictorial Alchemy</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Georgia', serif;
+      background-color: #f9f6f1;
+      background-attachment: fixed;
+      color: #2c2c2c;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 40px 20px 60px;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      top: -60px;
+      left: -60px;
+      width: 520px;
+      height: 420px;
+      background: radial-gradient(ellipse at 20% 20%,
+        rgba(255,255,200,0.82) 0%,
+        rgba(255,240,180,0.55) 30%,
+        rgba(255,230,150,0.25) 55%,
+        transparent 75%);
+      pointer-events: none;
+      z-index: 0;
+      border-radius: 50%;
+      filter: blur(22px);
+    }
+    .card {
+      position: relative;
+      z-index: 1;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.08);
+      padding: 48px 44px;
+      max-width: 580px;
+      width: 100%;
+    }
+    .brand { text-align: center; margin-bottom: 32px; }
+    .brand h1 { font-size: 1.8rem; font-weight: normal; letter-spacing: 0.02em; color: #1a1a1a; }
+    .brand p { margin-top: 6px; font-size: 0.9rem; color: #7a7a7a; font-style: italic; }
+    .form-group { margin-bottom: 22px; }
+    label { display: block; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: #555; margin-bottom: 8px; font-family: 'Georgia', serif; }
+    label .req { color: #b0806a; }
+    input, select, textarea { width: 100%; padding: 12px 14px; border: 1px solid #ddd; border-radius: 6px; font-size: 0.95rem; font-family: 'Georgia', serif; color: #2c2c2c; background: #fafafa; transition: border-color 0.2s, box-shadow 0.2s; appearance: none; -webkit-appearance: none; }
+    input:focus, select:focus, textarea:focus { outline: none; border-color: #b0806a; box-shadow: 0 0 0 3px rgba(176,128,106,0.12); background: #fff; }
+    .select-wrap { position: relative; }
+    .select-wrap::after { content: '\25BE'; position: absolute; right: 14px; top: 50%; transform: translateY(-50%); pointer-events: none; color: #888; font-size: 1rem; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    textarea { resize: vertical; min-height: 110px; }
+    .btn { width: 100%; padding: 15px; background: #2c2c2c; color: #fff; border: none; border-radius: 6px; font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; font-family: 'Georgia', serif; cursor: pointer; margin-top: 8px; transition: background 0.2s, transform 0.1s; }
+    .btn:hover { background: #444; }
+    .btn:active { transform: scale(0.99); }
+    .btn:disabled { background: #aaa; cursor: not-allowed; }
+    .msg { display: none; border-radius: 6px; padding: 14px 16px; margin-top: 16px; font-size: 0.9rem; line-height: 1.5; text-align: center; }
+    .msg.success { background: #f0faf4; border: 1px solid #7dba9a; color: #2d6b47; }
+    .msg.error { background: #fff5f5; border: 1px solid #e0a0a0; color: #8b2c2c; }
+    footer { margin-top: 48px; font-size: 0.75rem; color: #aaa; text-align: center; letter-spacing: 0.06em; position: relative; z-index: 1; }
+    @media (max-width: 520px) {
+      .card { padding: 32px 22px; }
+      .row { grid-template-columns: 1fr; }
+      .brand h1 { font-size: 1.5rem; }
+    }
+
     /* CAROUSEL */
     .carousel-section {
       position: relative;
