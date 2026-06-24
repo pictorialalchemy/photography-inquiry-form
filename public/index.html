@@ -71,7 +71,7 @@
       .brand h1 { font-size: 1.5rem; }
     }
 
-    /* ── CAROUSEL ── */
+    /* CAROUSEL */
     .carousel-section {
       position: relative;
       z-index: 1;
@@ -218,20 +218,20 @@
     <p class="carousel-label">A glimpse of the work</p>
     <div class="carousel-track-wrap" id="carouselWrap">
       <div class="carousel-track" id="carouselTrack">
-        <img src="/assets/images/home-hero/hero-01.jpg" alt="Pictorial Alchemy portfolio image 1" />
-        <img src="/assets/images/home-hero/hero-02.jpg" alt="Pictorial Alchemy portfolio image 2" />
-        <img src="/assets/images/home-hero/hero-03.jpg" alt="Pictorial Alchemy portfolio image 3" />
-        <img src="/assets/images/home-hero/hero-04.jpg" alt="Pictorial Alchemy portfolio image 4" />
-        <img src="/assets/images/home-hero/hero-05.jpg" alt="Pictorial Alchemy portfolio image 5" />
-        <img src="/assets/images/home-hero/hero-06.jpg" alt="Pictorial Alchemy portfolio image 6" />
-        <img src="/assets/images/home-hero/hero-07.jpg" alt="Pictorial Alchemy portfolio image 7" />
-        <img src="/assets/images/home-hero/hero-08.jpg" alt="Pictorial Alchemy portfolio image 8" />
-        <img src="/assets/images/home-hero/hero-09.jpg" alt="Pictorial Alchemy portfolio image 9" />
-        <img src="/assets/images/home-hero/hero-10.jpg" alt="Pictorial Alchemy portfolio image 10" />
-        <img src="/assets/images/home-hero/hero-11.jpg" alt="Pictorial Alchemy portfolio image 11" />
+        <img src="/assets/images/home-hero/hero-01.jpg" alt="Pictorial Alchemy portfolio 1" />
+        <img src="/assets/images/home-hero/hero-02.jpg" alt="Pictorial Alchemy portfolio 2" />
+        <img src="/assets/images/home-hero/hero-03.jpg" alt="Pictorial Alchemy portfolio 3" />
+        <img src="/assets/images/home-hero/hero-04.jpg" alt="Pictorial Alchemy portfolio 4" />
+        <img src="/assets/images/home-hero/hero-05.jpg" alt="Pictorial Alchemy portfolio 5" />
+        <img src="/assets/images/home-hero/hero-06.jpg" alt="Pictorial Alchemy portfolio 6" />
+        <img src="/assets/images/home-hero/hero-07.jpg" alt="Pictorial Alchemy portfolio 7" />
+        <img src="/assets/images/home-hero/hero-08.jpg" alt="Pictorial Alchemy portfolio 8" />
+        <img src="/assets/images/home-hero/hero-09.jpg" alt="Pictorial Alchemy portfolio 9" />
+        <img src="/assets/images/home-hero/hero-10.jpg" alt="Pictorial Alchemy portfolio 10" />
+        <img src="/assets/images/home-hero/hero-11.jpg" alt="Pictorial Alchemy portfolio 11" />
       </div>
-      <button class="carousel-btn prev" id="prevBtn" aria-label="Previous image">&#8592;</button>
-      <button class="carousel-btn next" id="nextBtn" aria-label="Next image">&#8594;</button>
+      <button class="carousel-btn prev" id="prevBtn" aria-label="Previous">&#8592;</button>
+      <button class="carousel-btn next" id="nextBtn" aria-label="Next">&#8594;</button>
     </div>
     <div class="carousel-dots" id="carouselDots"></div>
   </section>
@@ -260,12 +260,4 @@
       errorMsg.style.display = 'none';
       const formData = new FormData(this);
       try {
-        const res = await fetch('/api/submit', { method: 'POST', body: formData });
-        if (res.ok) { successMsg.style.display = 'block'; this.reset(); }
-        else { const data = await res.json(); errorMsg.textContent = data.error || 'Something went wrong.'; errorMsg.style.display = 'block'; }
-      } catch (err) { errorMsg.style.display = 'block'; }
-      btn.disabled = false;
-      btn.textContent = 'Send My Inquiry';
-    });
-
-    // Carousel
+        const res = await fetch('/api/submit', { method
