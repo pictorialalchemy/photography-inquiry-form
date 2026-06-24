@@ -15,8 +15,8 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 40px 20px;
+      justify-content: flex-start;
+      padding: 40px 20px 60px;
     }
     body::before {
       content: '';
@@ -64,23 +64,108 @@
     .msg { display: none; border-radius: 6px; padding: 14px 16px; margin-top: 16px; font-size: 0.9rem; line-height: 1.5; text-align: center; }
     .msg.success { background: #f0faf4; border: 1px solid #7dba9a; color: #2d6b47; }
     .msg.error { background: #fff5f5; border: 1px solid #e0a0a0; color: #8b2c2c; }
-    footer { margin-top: 28px; font-size: 0.75rem; color: #aaa; text-align: center; letter-spacing: 0.06em; position: relative; z-index: 1; }
+    footer { margin-top: 48px; font-size: 0.75rem; color: #aaa; text-align: center; letter-spacing: 0.06em; position: relative; z-index: 1; }
     @media (max-width: 520px) {
       .card { padding: 32px 22px; }
       .row { grid-template-columns: 1fr; }
       .brand h1 { font-size: 1.5rem; }
     }
+
+    /* ── CAROUSEL ── */
+    .carousel-section {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 860px;
+      margin-top: 56px;
+    }
+    .carousel-label {
+      text-align: center;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #b0806a;
+      margin-bottom: 18px;
+    }
+    .carousel-track-wrap {
+      position: relative;
+      overflow: hidden;
+      border-radius: 10px;
+      box-shadow: 0 6px 36px rgba(0,0,0,0.13);
+      background: #1a1a1a;
+    }
+    .carousel-track {
+      display: flex;
+      transition: transform 0.7s cubic-bezier(0.77, 0, 0.18, 1);
+      will-change: transform;
+    }
+    .carousel-track img {
+      min-width: 100%;
+      width: 100%;
+      height: 520px;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.15);
+      border: none;
+      color: #fff;
+      font-size: 1.4rem;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+      z-index: 2;
+      backdrop-filter: blur(4px);
+    }
+    .carousel-btn:hover { background: rgba(255,255,255,0.32); }
+    .carousel-btn.prev { left: 14px; }
+    .carousel-btn.next { right: 14px; }
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .carousel-dots span {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #ccc;
+      display: inline-block;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .carousel-dots span.active {
+      background: #b0806a;
+      transform: scale(1.3);
+    }
+    @media (max-width: 600px) {
+      .carousel-track img { height: 260px; }
+      .carousel-btn { width: 36px; height: 36px; font-size: 1rem; }
+    }
   </style>
 </head>
 <body>
+
   <div class="card">
     <div class="brand">
       <h1>Pictorial Alchemy</h1>
-      <p>Session Inquiry &mdash; Let&rsquo;s create something beautiful together.</p>
+      <p>Session Inquiry — Let's create something beautiful together.</p>
     </div>
     <form id="inquiryForm">
       <div class="form-group">
-        <label for="session">Session Category <span class="req">*</span></label>
+        abel for="session">Session Category <span class="req">*</span></label>
         <div class="select-wrap">
           <select id="session" name="session" required>
             <option value="" disabled selected>Select a session type...</option>
@@ -92,7 +177,7 @@
             <option value="Newborn">Newborn</option>
             <option value="Family">Family</option>
             <option value="Children / Milestone">Children / Milestone</option>
-            <option value="Quinceanera">Quince&ntilde;era</option>
+            <option value="Quinceanera">Quinceñera</option>
             <option value="Senior / Graduation">Senior / Graduation</option>
             <option value="Headshots / Brand">Headshots / Brand</option>
             <option value="Boudoir">Boudoir</option>
@@ -101,34 +186,60 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="desired_date">Desired Session Date <span class="req">*</span></label>
+        abel for="desired_date">Desired Session Date <span class="req">*</span></label>
         <input type="date" id="desired_date" name="desired_date" required />
       </div>
       <div class="form-group">
-        <label for="name">Full Name <span class="req">*</span></label>
+        abel for="name">Full Name <span class="req">*</span></label>
         <input type="text" id="name" name="name" placeholder="Your full name" required />
       </div>
       <div class="form-group row">
         <div>
-          <label for="phone">Phone Number <span class="req">*</span></label>
+          abel for="phone">Phone Number <span class="req">*</span></label>
           <input type="tel" id="phone" name="phone" placeholder="(956) 000-0000" required />
         </div>
         <div>
-          <label for="email">Email Address <span class="req">*</span></label>
+          abel for="email">Email Address <span class="req">*</span></label>
           <input type="email" id="email" name="email" placeholder="you@email.com" required />
         </div>
       </div>
       <div class="form-group">
-        <label for="message">Tell Me About Your Vision</label>
+        abel for="message">Tell Me About Your Vision</label>
         <textarea id="message" name="message" placeholder="Share any details, ideas, locations, or questions you have..."></textarea>
       </div>
-      <button type="submit" class="btn" id="submitBtn">Send My Inquiry</button>
-      <div class="msg success" id="successMsg">Thank you! Your inquiry has been received. I&rsquo;ll be in touch within 48 hours.</div>
+      <button class="btn" id="submitBtn" type="submit">Send My Inquiry</button>
+      <div class="msg success" id="successMsg">Thank you! Your inquiry has been received. I'll be in touch within 48 hours.</div>
       <div class="msg error" id="errorMsg">Something went wrong. Please try again or email me directly.</div>
     </form>
   </div>
-  <footer>&copy; 2026 Pictorial Alchemy &mdash; All rights reserved.</footer>
+
+  <!-- CAROUSEL -->
+  <section class="carousel-section" aria-label="Portfolio preview">
+    <p class="carousel-label">A glimpse of the work</p>
+    <div class="carousel-track-wrap" id="carouselWrap">
+      <div class="carousel-track" id="carouselTrack">
+        <img src="/assets/images/home-hero/hero-01.jpg" alt="Pictorial Alchemy portfolio image 1" />
+        <img src="/assets/images/home-hero/hero-02.jpg" alt="Pictorial Alchemy portfolio image 2" />
+        <img src="/assets/images/home-hero/hero-03.jpg" alt="Pictorial Alchemy portfolio image 3" />
+        <img src="/assets/images/home-hero/hero-04.jpg" alt="Pictorial Alchemy portfolio image 4" />
+        <img src="/assets/images/home-hero/hero-05.jpg" alt="Pictorial Alchemy portfolio image 5" />
+        <img src="/assets/images/home-hero/hero-06.jpg" alt="Pictorial Alchemy portfolio image 6" />
+        <img src="/assets/images/home-hero/hero-07.jpg" alt="Pictorial Alchemy portfolio image 7" />
+        <img src="/assets/images/home-hero/hero-08.jpg" alt="Pictorial Alchemy portfolio image 8" />
+        <img src="/assets/images/home-hero/hero-09.jpg" alt="Pictorial Alchemy portfolio image 9" />
+        <img src="/assets/images/home-hero/hero-10.jpg" alt="Pictorial Alchemy portfolio image 10" />
+        <img src="/assets/images/home-hero/hero-11.jpg" alt="Pictorial Alchemy portfolio image 11" />
+      </div>
+      <button class="carousel-btn prev" id="prevBtn" aria-label="Previous image">&#8592;</button>
+      <button class="carousel-btn next" id="nextBtn" aria-label="Next image">&#8594;</button>
+    </div>
+    <div class="carousel-dots" id="carouselDots"></div>
+  </section>
+
+  <footer>© 2026 Pictorial Alchemy — All rights reserved.</footer>
+
   <script>
+    // Phone formatter
     const phoneInput = document.getElementById('phone');
     phoneInput.addEventListener('input', function () {
       let val = this.value.replace(/\D/g, '').substring(0, 10);
@@ -136,6 +247,8 @@
       else if (val.length >= 3) { val = '(' + val.substring(0,3) + ') ' + val.substring(3); }
       this.value = val;
     });
+
+    // Form submit
     document.getElementById('inquiryForm').addEventListener('submit', async function (e) {
       e.preventDefault();
       const btn = document.getElementById('submitBtn');
@@ -154,6 +267,5 @@
       btn.disabled = false;
       btn.textContent = 'Send My Inquiry';
     });
-  </script>
-</body>
-</html>
+
+    // Carousel
